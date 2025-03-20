@@ -8,16 +8,10 @@ const pool = new Pool({
     },
   });
 
-
-
-
-
-
-
 async function fetchEmails() {
     let userMails;
     try {
-        const result = await db.query("select email from users");
+        const result = await pool.query("select email from users");
         const emails = result.rows;
         userMails = emails.map(ele => ele['email']);
         return userMails;
@@ -28,7 +22,7 @@ async function fetchEmails() {
 };
 
 async function insertNewUser(fn, ln, em, ps) {
-    await db.query(
+    await pool.query(
         `insert into users(fname,lname,email,password) 
          values($1,$2,$3,$4)`,
         [fn, ln, em, ps]
@@ -38,7 +32,7 @@ async function insertNewUser(fn, ln, em, ps) {
 async function fetchPasswords() {
     let userPasswords;
     try {
-        const result = await db.query('select password from users');
+        const result = await pool.query('select password from users');
         const passwords = result.rows;
         userPasswords = passwords.map(ele => ele['password']);
         return userPasswords;
@@ -50,9 +44,9 @@ async function fetchPasswords() {
     }
 }
 
-async function findFnameIdbyEmail(email) {
+async function findFnameIpoolyEmail(email) {
     try {
-        const result = await db.query("select fname,user_id from users where email=$1", [email]);
+        const result = await pool.query("select fname,user_id from users where email=$1", [email]);
         const details = result.rows[0];
         const fName = details['fname'];
         const Id = details['user_id'];
@@ -65,7 +59,7 @@ async function findFnameIdbyEmail(email) {
 
 async function allPosts() {
     try {
-        const result = await db.query(`
+        const result = await pool.query(`
             SELECT 
                 p.post_id,
                 p.user_id,
@@ -92,7 +86,7 @@ async function allPosts() {
 async function findMyPosts(id) {
     try {
         if (id) {
-            const result = await db.query(`
+            const result = await pool.query(`
                 SELECT 
                     p.post_id,
                     p.user_id,
@@ -127,7 +121,7 @@ async function trendingPosts() {
         let trendingPosts = [];
 
         while (trendingPosts.length < 10) {
-            const result = await db.query(`
+            const result = await pool.query(`
                 SELECT 
                     p.post_id,
                     p.user_id,
@@ -163,7 +157,7 @@ async function trendingPosts() {
 
 // to get user reactions when logged in.
 async function userReactions(user_id) {
-    let response = await db.query("select * from post_reactions where user_id=$1", [user_id]);
+    let response = await pool.query("select * from post_reactions where user_id=$1", [user_id]);
     let result = response.rows;
     return result;
 }
@@ -181,7 +175,7 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
             if (existingReaction.reaction_type == action) {
                 console.log("reaction found of same type")
                 // Same reaction: User is toggling off their reaction
-                await db.query('DELETE FROM post_reactions WHERE user_id=$1 AND post_id=$2', [userId, postId]);
+                await pool.query('DELETE FROM post_reactions WHERE user_id=$1 AND post_id=$2', [userId, postId]);
                 if (action == "like") {
                     return [likes - 1, dislikes];
                 }
@@ -191,7 +185,7 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
             } else {
                 console.log("reaction found of diferent type")
                 // Opposite reaction exists: User is switching reaction types
-                await db.query('UPDATE post_reactions SET reaction_type=$1 WHERE user_id=$2 AND post_id=$3',
+                await pool.query('UPDATE post_reactions SET reaction_type=$1 WHERE user_id=$2 AND post_id=$3',
                     [action, userId, postId]);
                 // For the new reaction type, count should be increased by one and old reaction should decreased by one.
 
@@ -205,7 +199,7 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
         } else {
             console.log("no reaction found");
             // No reaction exists add new reaction and increment reaction count.
-            await db.query('INSERT INTO post_reactions(user_id, post_id, reaction_type) VALUES ($1, $2, $3)',
+            await pool.query('INSERT INTO post_reactions(user_id, post_id, reaction_type) VALUES ($1, $2, $3)',
                 [userId, postId, action]);
             if (action == "like") {
                 return [likes + 1, dislikes];
@@ -221,7 +215,7 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
 
 async function addPost(userId, userName, category, title, content, date) {
     try {
-        const result = await db.query('insert into posts(user_id,user_name,post_category,post_title,post_content,post_date) values($1,$2,$3,$4,$5,$6)', [userId, userName, category, title, content, date]);
+        const result = await pool.query('insert into posts(user_id,user_name,post_category,post_title,post_content,post_date) values($1,$2,$3,$4,$5,$6)', [userId, userName, category, title, content, date]);
         return true;
     } catch (err) {
         console.log("error occurred while inserting new post", err);
@@ -231,7 +225,7 @@ async function addPost(userId, userName, category, title, content, date) {
 
 async function deletePost(userId, postId) {
     try {
-        const result = await db.query('delete from posts where user_id=$1 and post_id=$2', [userId, postId]);
+        const result = await pool.query('delete from posts where user_id=$1 and post_id=$2', [userId, postId]);
         return true;
     }
     catch (err) {
@@ -241,5 +235,5 @@ async function deletePost(userId, postId) {
 }
 
 
-export { fetchEmails, insertNewUser, fetchPasswords, findFnameIdbyEmail, allPosts, findMyPosts, trendingPosts, userReactions, updateReactions, deletePost, addPost };
+export { fetchEmails, insertNewUser, fetchPasswords, findFnameIpoolyEmail, allPosts, findMyPosts, trendingPosts, userReactions, updateReactions, deletePost, addPost };
 
