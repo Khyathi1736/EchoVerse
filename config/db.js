@@ -3,7 +3,8 @@ import pg from 'pg';
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL, // Use env variable
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false, // SSL for cloud DBs
+  ssl: process.env.DATABASE_URL.includes("render") ? { rejectUnauthorized: false } : false
+
 });
 
 // const db=new pg.Pool({
@@ -15,7 +16,6 @@ const db = new pg.Pool({
 // })
 
 
-db.connect();
 
 
 
