@@ -1,0 +1,16 @@
+<div class="navbar">
+    <img class="logo" src="./images/logo.png" alt="Logo">
+    <ul class="nav-items">
+        <li class="nav-item"><a class="item-link" href="/home">Home</a></li>
+        <li class="nav-item"><a class="item-link" href="/myposts">My Posts</a></li>
+        <li class="nav-item"><a class="item-link" href="/trending-posts">Trending</a></li>
+        <li class="nav-item"><a class="item-link" href="/about">About</a></li>
+        <li class="nav-item"><a class="item-link" href="/contact">Contact</a></li>
+    </ul>
+    <a class="signin item-link" id="signin">Sign in</a>
+    <ul class="dropdown-menu">
+        <li class="dropdown-item">Log out</li>
+    </ul>
+    <script id="fName" type="application/json"><%- JSON.stringify(fName || '') %></script>
+</div>
+

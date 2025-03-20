@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveBlogs</title>
+    <link rel="icon" href="./images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <form id="signin-form" action="/home" class="flex" method="post">
+            <h1 class="flex-item">Sign in</h1>
+            <input class="flex-item" placeholder="email address" type="text" name="email" id="email" >
+            <input class="flex-item" placeholder="Password" type="password" name="password" id="password" >
+            <input class="flex-item" type="submit" value="Sign in" id="signin">
+            <p class="flex-item">do not have an account?&nbsp;<a href="/signup">Sign up</a></p>
+        </form>
+
+    </div>
+    <!-- alert when account creation completed or aborted-->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get("message");
+        if (message == "successful") {
+            alert("Account created successfully");
+        }
+        else if (message == "error") {
+            alert("Some error occured");
+        }
+    </script>
+
+    <script src="./js/login.js"></script>
+
+    <!-- form validation -->
+    <script>
+        $(function () {
+            const r1 = `<%- JSON.stringify(userMails || []) %>`;
+            const userMails = JSON.parse(r1);
+            const r2 = `<%- JSON.stringify(userPasswords || []) %>`;
+            const userPasswords = JSON.parse(r2);
+            const mailsSet = new Set(userMails);
+            $("#signin-form").submit(function (event) {
+
+                const email = $("#email");
+                const password = $("#password");
+                let isvalid = true;
+
+                // verify email field is not not empty
+                if (email.val().trim().length == 0) {
+                    email.val("");
+                    email.attr("placeholder", "This field is required").css({ borderColor: "#F26262" });
+                    isvalid = false;
+                }
+                // verify password field is not empty
+                if (password.val().trim().length == 0) {
+                    password.attr("placeholder", "This field is required").css({ borderColor: "#F26262" });
+                    isvalid = false;
+                }
+                // verify email only if fields are not empty
+                if (isvalid) {
+                    // validate email
+                    if (mailsSet.has(email.val().trim())) {
+                        const index = userMails.indexOf(email.val().trim());
+                        // validate password if email is correct
+                        if (userPasswords[index] != password.val().trim()) {
+                            password.val("")
+                            password.attr("placeholder", "Wrong Password").css({ borderColor: "#F26262" });
+                            isvalid = false;
+                        }
+                    }
+                    else {
+                        email.val("");
+                        email.attr("placeholder", "Email does not exist").css({ borderColor: "#F26262" });
+                        isvalid = false;
+                    }
+                }
+                if (!isvalid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fab078;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: auto;
+}
+
+.container {
+    /* width automatically adjusted using js */
+    height: auto;
+    margin-top: 10px;
+    background-color: rgb(197, 253, 253);
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+}
+
+.flex-item {
+    margin: 0.8em auto;
+}
+#signin-form:first-child{
+    text-align: center;
+}
+#siginin-form:last-child{
+    text-align: center;
+}
+
+input {
+    outline: none;
+    height: 3.3em;
+    width: 80%;
+    padding: 0.7em;
+    border: 2px solid rgb(5 2, 51, 51);
+    border: 2px solid transparent;
+
+}
+
+.bg-orange {
+    background: #fab078;
+}
+
+.orange-color {
+    color: #fab078;
+}
+
+.border-radius {
+    border-radius: 1em;
+}
+
+.text-center {
+    text-align: center;
+}

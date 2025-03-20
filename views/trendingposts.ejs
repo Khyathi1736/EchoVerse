@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <title>EchoVerse</title>
+    <link rel="stylesheet" href="./css/partials.css">
+    <link rel="stylesheet" href="./css/posts.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <%- include("./partials/header.ejs") %>
+        <div class="bodyContent">
+            <ol class="posts">
+                <% trending_posts.forEach(post=> { %>
+                    <ul class="post">
+                        <!-- posts_id is disabled but used to get post id for liking and disliking -->
+                        <li class="post_id">
+                            <%= post.post_id %>
+                        </li>
+                        <li class="user_id">
+                            <%= userId %>
+                        </li>
+                        <li class="category">
+                            <%= post.post_category %>
+                        </li>
+                        <li class="title">
+                            <span class="fire-emoji">🔥</span>
+                            <%= post.post_title %>
+                        </li>
+                        <li class="content">
+                            <%= post.post_content %>
+                        </li>
+                        <li class="author"><i>by</i>&nbsp;<%= post.user_name %>
+                        </li>
+                        <div class="card-bottom">
+                            <div class="votes">
+                                <span class="upvote">⬆️ <span id="like_num">
+                                        <%= post.post_likes %>
+                                    </span></span>
+                                <span class="downvote">⬇️ <span id="dislike_num">
+                                        <%= post.post_dislikes %>
+                                    </span>
+                            </div>
+                            <div class="date">
+                                <p>
+                                    <%= new Date(post.post_date).toLocaleString('en-US', { month: 'short' ,
+                                        day: 'numeric' , year:'numeric' }) %>
+                                </p>
+
+                            </div>
+                        </div>
+                    </ul>
+                    <% }) %>
+            </ol>
+        </div>
+        <button id="scrollToTop">&#8679;</button>
+        <%- include("./partials/footer.ejs") %>
+            <script>var userId = `<%= JSON.stringify(userId) %>`;</script>
+            <script>var reactions = JSON.parse('<%- JSON.stringify(reactions) %>');</script>
+            <script src="./js/partials.js"></script>
+            <script src="./js/posts.js"></script>
+            <script src="./js/trending_posts.js"></script>
+</body>
+
+</html>

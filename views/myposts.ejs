@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <title>EchoVerse</title>
+    <link rel="stylesheet" href="./css/partials.css">
+    <link rel="stylesheet" href="./css/posts.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+
+<body>
+    <%- include("./partials/header.ejs") %>
+        <div class="bodyContent">
+            <!-- initially hidden only visible when add post button clicked -->
+
+            <ol class="posts">
+                <div class="new_post_popup">
+                    <button class="close-btn">X</button>
+                    <!-- form action handled in js -->  
+                    <form class="new_post">
+                        <div class="one">
+                            <span>Category:</span>
+                            <input type="text" name="category" class="np_category" id="np_category">
+                        </div>
+                        <div class="two">
+                            <span>Title:</span>
+                            <input type="text" name="title" class="np_title" id="np_title">
+                        </div>
+                        <div class="three">
+                            <span>Content:</span>
+                            <input type="text" name="content" class="np_content" id="np_content">
+                        </div>
+                        <button type="submit" class="np_submit">Add Post</button>
+                    </form>
+                </div>
+
+
+                <div class="btn-background">
+                    <button class="add-btn">
+                        <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+                </div>
+                <% if (userId) { %>
+                    <% if (myPosts && myPosts.length> 0) { %>
+                        <% myPosts.forEach(post=> { %>
+                            <ul class="post">
+                                <li class="post_id">
+                                    <%= post.post_id %>
+                                </li>
+                                <li class="user_id">
+                                    <%= userId %>
+                                </li>
+                                <li class="category">
+                                    <%= post.post_category %>
+                                </li>
+                                <div class="icons">
+                                    <button class="edit-btn">
+                                        <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke="white" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn">
+                                        <svg class="delete-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M3 6h18" stroke="white" stroke-width="2" stroke-linecap="round">
+                                            </path>
+                                            <path d="M8 6v-2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="white"
+                                                stroke-width="2" stroke-linecap="round"></path>
+                                            <path d="M10 11v6" stroke="white" stroke-width="2" stroke-linecap="round">
+                                            </path>
+                                            <path d="M14 11v6" stroke="white" stroke-width="2" stroke-linecap="round">
+                                            </path>
+                                            <path d="M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14" stroke="white"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+
+                                <li class="title">
+                                    <%= post.post_title %>
+                                </li>
+                                <li class="content">
+                                    <%= post.post_content %>
+                                </li>
+                                <li class="author"><i>by</i>&nbsp;<%= post.user_name %>
+                                </li>
+                                <div class="card-bottom">
+                                    <div class="votes">
+                                        <span class="upvote">⬆️ <span id="like_num">
+                                                <%= post.post_likes %>
+                                            </span></span>
+                                        <span class="downvote">⬇️ <span id="dislike_num">
+                                                <%= post.post_dislikes %>
+                                            </span></span>
+                                    </div>
+                                    <div class="date">
+                                        <p>
+                                            <%= new Date(post.post_date).toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' }) %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </ul>
+                            <% }) %>
+                                <% } else { %>
+                                    <h3 class="no-posts">There are no posts to show 😕</h3>
+                                    <% } %>
+
+                                        <% } else{ %>
+                                            <h3 class="no-posts">Please Login to see Your Posts 🙂</h3>
+                                            <%} %>
+
+            </ol>
+        </div>
+        <button id="scrollToTop">&#8679;</button>
+
+        <%- include("./partials/footer.ejs") %>
+            <script>
+                var userId = `<%= JSON.stringify(userId) %>`;
+            </script>
+            <script>
+                var reactions = JSON.parse('<%- JSON.stringify(reactions) %>');
+            </script>
+            <script src="./js/partials.js"></script>
+            <script src="./js/posts.js"></script>
+
+</body>
+
+</html>

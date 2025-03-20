@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoVerse</title>
+    <link rel="icon" href="./images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <form id="signup-form" action="/signin" method="post" class="flex" novalidate>
+            <h1 class="flex-item">Sign Up</h1>
+            <input class="flex-item" placeholder="first name" type="text" name="fname" id="fname">
+            <input class="flex-item" placeholder="last name" type="text" name="lname" id="lname">
+            <input class="flex-item" placeholder="email address" type="email" name="mail" id="mail">
+            <input class="flex-item" placeholder="password" type="password" name="password" id="password">
+            <input class="flex-item" type="submit" value="Sign Up" id="signup">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="./js/login.js"></script>
+    <script>
+        const result = `<%- JSON.stringify(userMails || []) %>`;
+        const userMails = new Set(JSON.parse(result));
+        $(function () {
+            $("#signup-form").submit(function (event) {
+                const firstName = $('#fname');
+                const userMail = $('#mail');
+                const userPassword = $('#password');
+                let isValid = true;
+
+                // verify first name field is not empty
+                if (firstName.val().trim().length == 0) {
+                    isValid = false;
+                    firstName.attr("placeholder", "This field is required").css({ borderColor: "#F26262" });
+                    isValid = false;
+                }
+                if (userMail.val().trim().length == 0) {
+                    isValid = false;
+                    userMail.attr("placeholder", "This field is required").css({ borderColor: "#F26262" });
+                    isValid = false;
+                }
+                if (userPassword.val().trim().length == 0) {
+                    isValid = false;
+                    userPassword.attr("placeholder", "This field is required").css({ borderColor: "#F26262" });
+                    isValid = false;
+                }
+
+                // verify mail or password only if fields are not empty
+                if (isValid) {
+                    // validating email
+                    if (!userMail.val().trim().includes('@gmail.com') || userMail.val().trim().length < 11) {
+                        userMail.val('')
+                        userMail.attr("placeholder", "invalid email");
+                        userMail.css('border-color', '#F26262');
+                        isValid = false;
+                    }
+
+                    // checking mail exists already or not
+                    if (userMails.has(userMail.val().trim())) {
+                        userMail.val('')
+                        userMail.attr("placeholder", "mail already exits");
+                        userMail.css('border-color', '#F26262');
+                        isValid = false;
+                    }
+
+                    // validating password
+                    if (userPassword.val().trim().length < 8) {
+                        userPassword.val('');
+                        userPassword.attr("placeholder", "password is weak");
+                        userPassword.css('border-color', '#F26262');
+                        isValid = false;
+                    }
+
+                }
+
+                // if any not valid stop loading sign in page.
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

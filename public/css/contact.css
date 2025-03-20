@@ -1,0 +1,96 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("/images/contact.webp");
+    height:auto;
+    min-height: 100dvh;
+    display:flex;
+    flex-direction: column;
+}
+.bodyContent{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.c-container {
+    /* width automatically adjusted using js */
+    height: auto;
+    margin: 3em;
+    background-color: transparent;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-flex {
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+    border-radius: 2em;
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px); 
+}
+
+.c-flex-item {
+    margin: 0.8em auto;
+}
+#contact-form:first-child{
+    text-align: center;
+}
+
+
+.c-input {
+    outline: none;
+    height: 3.3em;
+    width: 80%;
+    padding: 0.7em;
+    border: 2px solid rgb(5 2, 51, 51);
+    border: 2px solid transparent;
+    border-radius:0.5em;
+
+}
+#c-submit{
+    background-color: rgb(197, 253, 253);
+}
+
+
+footer {
+    text-align: center;
+    padding: 1em;
+}
+
+
+
+
+
+/* #c-social-links{
+    width:100%;
+    height:auto;
+    border:2px solid black;
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(7px);
+    text-align: center;
+    padding:1em;
+    margin:2em auto;
+}
+#c-icons-list{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin:0.5em ;
+}
+li{
+    list-style: none;
+    margin:0.5em;
+}
+.c-icon{
+    width:50px;
+    height:50px;
+} */
