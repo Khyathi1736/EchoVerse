@@ -1,18 +1,13 @@
 import pg from 'pg';
 
 
-const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL, // Use env variable
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false, // SSL for cloud DBs
-});
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false, // Required for cloud-hosted databases
+    },
+  });
 
-// const db=new pg.Pool({
-//     user:"postgres",
-//     database:"Blogs",
-//     password:"Khyathi@1736",
-//     host:"localhost",
-//     port:5432,
-// })
 
 
 
