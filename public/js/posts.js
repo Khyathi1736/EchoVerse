@@ -67,6 +67,37 @@ $(function () {
         const newPostBtn = $(".btn-background");
         var titleFontSize, popupWidth;
 
+
+        if (windowWidth >= 370) {
+            $(".card-bottom").css({
+                "grid-template-columns": "auto auto",
+            });
+            $(".votes").css({
+                "order":"1",
+            });
+            $(".date").css({
+                "order":"2",
+            });
+            $(".upvote").css({
+                "margin": "0 1em 0 1em",
+            });
+        } else {
+            $(".card-bottom").css({
+                "grid-template-columns": "1fr",
+                "margin":"0px",
+            });
+            $(".votes").css({
+                "order":"2",
+            });
+            $(".date").css({
+                "order":"1",
+            });
+            $(".upvote").css({
+                "margin-left":"0px"
+            });
+        } 
+    
+
         // Determine the title font size based on the window width
         if (windowWidth >= 1201) {
             titleFontSize = "2em";

@@ -285,3 +285,7 @@ h4 {
 .np_content{
     height:6em;
 }
+.card-bottom{
+    display:grid;
+    grid-template-columns: auto auto;
+}
