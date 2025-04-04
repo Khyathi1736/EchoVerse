@@ -1,83 +1,85 @@
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     // adjust body background
     function adjustImage() {
-        let bg = $("body");
-        bg.css({
-            "background-image": 'url("/images/about.webp")',
+        let bg = document.body;
+        Object.assign(bg.style, {
+            "backgroundImage": 'url("/images/about.webp")',
             "height": "auto",
-            "min-height": "100dvh",
+            "minHeight": "100dvh",
             "display": "flex",
-            "flex-direction": "column",
-            "background-repeat": "no-repeat",
-            "background-position": "center center",
-            "background-size": "cover",
+            "flexDirection": "column",
+            "backgroundRepeat": "no-repeat",
+            "backgroundPosition": "center center",
+            "backgroundSize": "cover",
         });
     }
 
     adjustImage();
-    $(window).on("resize orientationchange", adjustImage);
+    window.addEventListener("resize", adjustImage);
+    window.addEventListener("orientationchange", adjustImage);
 
     function adjustStyles() {
-        let screenWidth = $(window).width();
-    
-        $('.box').each(function () {
+        let screenWidth = window.innerWidth;
+
+        let boxes = document.querySelectorAll('.box');
+        boxes.forEach(function (box) {
             if (screenWidth < 600) {
-                $(this).css({
-                    'font-size': '0.9em',
-                    'padding': '0.3em',
-                    'line-height': '1.7em',
-                    'margin': '0.5em 0px'
+                box.style.fontSize = '0.9em';
+                box.style.padding = '0.3em';
+                box.style.lineHeight = '1.7em';
+                box.style.margin = '0.5em 0px';
+
+                let icons = document.querySelectorAll(".social-icons img");
+                icons.forEach(function (icon) {
+                    icon.style.width = '25px';
+                    icon.style.height = '25px';
+                    icon.style.margin = '5px';
                 });
-    
-                $(".social-icons img").css({
-                    'width': '25px',
-                    'height': '25px',
-                    'margin': '5px'
-                });
-    
+
             } else if (screenWidth < 900) {
-                $(this).css({
-                    'font-size': '1.2em',
-                    'padding': '0.5em',
-                    'line-height': '1.8em',
-                    'margin': '0.7em 0px'
+                box.style.fontSize = '1.2em';
+                box.style.padding = '0.5em';
+                box.style.lineHeight = '1.8em';
+                box.style.margin = '0.7em 0px';
+
+                let icons = document.querySelectorAll(".social-icons img");
+                icons.forEach(function (icon) {
+                    icon.style.width = '30px';
+                    icon.style.height = '30px';
+                    icon.style.margin = '7px';
                 });
-    
-                $(".social-icons img").css({
-                    'width': '30px',
-                    'height': '30px',
-                    'margin': '7px'
-                });
-    
+
             } else {
-                $(this).css({
-                    'font-size': '1.3em',
-                    'padding': '0.7em',
-                    'line-height': '1.9em',
-                    'margin': '1em 0px'
-                });
-    
-                $(".social-icons img").css({
-                    'width': '35px',
-                    'height': '35px',
-                    'margin': '10px'
+                box.style.fontSize = '1.3em';
+                box.style.padding = '0.7em';
+                box.style.lineHeight = '1.9em';
+                box.style.margin = '1em 0px';
+
+                let icons = document.querySelectorAll(".social-icons img");
+                icons.forEach(function (icon) {
+                    icon.style.width = '35px';
+                    icon.style.height = '35px';
+                    icon.style.margin = '10px';
                 });
             }
         });
-    }    
+    }
+
     adjustStyles();
-    $(window).on("resize orientationchange",adjustStyles);
+    window.addEventListener("resize", adjustStyles);
+    window.addEventListener("orientationchange", adjustStyles);
 
     // Hover effect for social icons
-    $(".social-icons img").on("mouseenter", function () {
-        $(this).css(
-            {
-                "opacity": "0.7",
-                "cursor":"pointer",
-            });
-    }).on("mouseleave", function () {
-        $(this).css("opacity", "1");
+    let socialIcons = document.querySelectorAll(".social-icons img");
+    socialIcons.forEach(function (icon) {
+        icon.addEventListener("mouseenter", function () {
+            icon.style.opacity = "0.7";
+            icon.style.cursor = "pointer";
+        });
+        icon.addEventListener("mouseleave", function () {
+            icon.style.opacity = "1";
+        });
     });
-    
-})
+
+});
