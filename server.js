@@ -114,7 +114,6 @@ app.post("/signin", async (req, res) => {
     const newData = req.body;
     try {
         await insertNewUser(newData['fname'], newData['lname'], newData['mail'], newData['password']);
-        console.log("done")
         res.redirect("/signin?message=successful");
     }
     catch (err) {

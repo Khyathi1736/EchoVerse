@@ -181,9 +181,7 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
         let existingReaction = user_reactions.find(obj => obj.post_id == postId);
 
         if (existingReaction) {
-            console.log("reaction found")
             if (existingReaction.reaction_type == action) {
-                console.log("reaction found of same type")
                 // Same reaction: User is toggling off their reaction
                 await pool.query('DELETE FROM post_reactions WHERE user_id=$1 AND post_id=$2', [userId, postId]);
                 if (action == "like") {
@@ -193,7 +191,6 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
                     return [likes, dislikes - 1];
                 }
             } else {
-                console.log("reaction found of diferent type")
                 // Opposite reaction exists: User is switching reaction types
                 await pool.query('UPDATE post_reactions SET reaction_type=$1 WHERE user_id=$2 AND post_id=$3',
                     [action, userId, postId]);
@@ -207,7 +204,6 @@ async function updateReactions(userId, postId, likes, dislikes, action) {
                 }
             }
         } else {
-            console.log("no reaction found");
             // No reaction exists add new reaction and increment reaction count.
             await pool.query('INSERT INTO post_reactions(user_id, post_id, reaction_type) VALUES ($1, $2, $3)',
                 [userId, postId, action]);

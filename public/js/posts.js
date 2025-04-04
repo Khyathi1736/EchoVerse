@@ -130,35 +130,51 @@ $(function () {
         if (windowWidth >= 1201) {
             $(".posts").css({ "margin": "2em auto", "padding": "0 2em" });
             $(".post").css({ "font-size": "1.5em", "margin": "1.3em auto", "padding": "1em", "width": "80%", "margin-bottom": "2em" });
-            $(".delete-icon,.edit-icon,.add-icon").css({ "width": "25px", "height": "25px" });
-            $(".delete-btn,.edit-btn,.add-btn").css({ "padding": "10px", "margin": "5px" });
+        
+            $(".delete-icon, .edit-icon, .add-icon").css({ "width": "25px", "height": "25px" });
+            $(".like-icon, .dislike-icon").css({ "width": "35px", "height": "35px" });
+        
+            $(".delete-btn, .edit-btn, .add-btn, .like-btn, .dislike-btn").css({ "padding": "10px", "margin": "5px" });
             $(".icons").css({ "top": "17px", "right": "10px" });
         } else if (windowWidth >= 750 && windowWidth < 1200) {
             $(".posts").css({ "margin": "1.5em auto", "padding": "0 1.3em" });
             $(".post").css({ "font-size": "1.3em", "margin": "1.8em auto", "padding": "1.3em", "width": "85%", "margin-bottom": "1.5em" });
-            $(".delete-icon,.edit-icon,.add-icon").css({ "width": "21px", "height": "21px" });
-            $(".delete-btn,.edit-btn,.add-btn").css({ "padding": "10px", "margin": "4.5px" });
+        
+            $(".delete-icon, .edit-icon, .add-icon").css({ "width": "21px", "height": "21px" });
+            $(".like-icon, .dislike-icon").css({ "width": "31px", "height": "31px" });
+        
+            $(".delete-btn, .edit-btn, .add-btn, .like-btn, .dislike-btn").css({ "padding": "10px", "margin": "4.5px" });
             $(".icons").css({ "top": "17px", "right": "10px" });
         } else if (windowWidth >= 450 && windowWidth < 750) {
             $(".posts").css({ "margin": "1em auto", "padding": "0 1.1em" });
             $(".post").css({ "font-size": "1.2em", "margin": "1.5em auto", "padding": "1.1em", "width": "90%", "margin-bottom": "1.3em" });
-            $(".delete-icon,.edit-icon,.add-icon").css({ "width": "19px", "height": "19px" });
-            $(".delete-btn,.edit-btn,.add-btn").css({ "padding": "7px", "margin": "3.5px" });
+        
+            $(".delete-icon, .edit-icon, .add-icon").css({ "width": "19px", "height": "19px" });
+            $(".like-icon, .dislike-icon").css({ "width": "29px", "height": "29px" });
+        
+            $(".delete-btn, .edit-btn, .add-btn, .like-btn, .dislike-btn").css({ "padding": "7px", "margin": "3.5px" });
             $(".icons").css({ "top": "16px", "right": "10px" });
         } else if (windowWidth >= 350 && windowWidth < 450) {
             $(".posts").css({ "margin": "1em auto", "padding": "0.9em" });
             $(".post").css({ "font-size": "1.1em", "margin": "1.5em auto", "padding": "0.9em", "width": "95%", "margin-bottom": "1em" });
-            $(".delete-icon,.edit-icon,.add-icon").css({ "width": "16px", "height": "16px" });
-            $(".delete-btn,.edit-btn,.add-btn").css({ "padding": "6px", "margin": "2.5px" });
+        
+            $(".delete-icon, .edit-icon, .add-icon").css({ "width": "16px", "height": "16px" });
+            $(".like-icon, .dislike-icon").css({ "width": "26px", "height": "26px" });
+        
+            $(".delete-btn, .edit-btn, .add-btn, .like-btn, .dislike-btn").css({ "padding": "6px", "margin": "2.5px" });
             $(".icons").css({ "top": "15px", "right": "8px" });
         } else {
             $(".posts").css({ "margin": "1em auto", "padding": "0 0.7em" });
             $(".post").css({ "font-size": "0.8em", "margin": "1.5em auto", "padding": "0.7em", "width": "100%", "margin-bottom": "0.8em" });
-            $(".delete-icon,.edit-icon,.add-icon").css({ "width": "11px", "height": "11px" });
-            $(".delete-btn,.edit-btn,.add-btn").css({ "padding": "4px", "margin": "2px" });
+        
+            $(".delete-icon, .edit-icon, .add-icon").css({ "width": "11px", "height": "11px" });
+            $(".like-icon, .dislike-icon").css({ "width": "21px", "height": "21px" });
+        
+            $(".delete-btn, .edit-btn, .add-btn, .like-btn, .dislike-btn").css({ "padding": "4px", "margin": "2px" });
             $(".icons").css({ "top": "10px", "right": "5px" });
         }
-
+        
+        
         // Adjust close button size
         let closeBtnSize = windowWidth > 450 ? "35px" : "30px";
         $(".new_post_popup .close-btn").css({
