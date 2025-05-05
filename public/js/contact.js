@@ -121,13 +121,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Email Validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emailVal = email.value.trim();
             if (!emailVal) {
                 email.value = "";
                 email.placeholder = "This field is required";
                 email.style.borderColor = "#F26262";
                 isValid = false;
-            } else if (!emailVal.includes("@gmail.com") || emailVal.length < 11) {
+                    
+            } else if (!emailPattern.test(emailVal.trim())){
                 email.value = "";
                 email.placeholder = "Enter valid email";
                 email.style.borderColor = "#F26262";
@@ -137,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!isValid) {
                 event.preventDefault();
             } else {
-                alert("Submitted successfully");
+                alert("Thanks for reaching out! We’ll get back to you soon.");
             }
         }
     });

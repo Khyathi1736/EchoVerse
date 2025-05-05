@@ -52,7 +52,8 @@
                 // verify mail or password only if fields are not empty
                 if (isValid) {
                     // validating email
-                    if (!userMail.val().trim().includes('@gmail.com') || userMail.val().trim().length < 11) {
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(userMail.val().trim())){
                         userMail.val('')
                         userMail.attr("placeholder", "invalid email");
                         userMail.css('border-color', '#F26262');

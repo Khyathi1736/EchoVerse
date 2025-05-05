@@ -74,7 +74,7 @@
     width:99vw;
     margin:0px auto;
     text-align: center;
-    z-index: 1000000;
+    z-index: 10;
     max-width: 99vw;
 
 }
