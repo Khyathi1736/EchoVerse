@@ -1,21 +1,21 @@
 import pkg from 'pg';
-const { Pool } = pkg; 
+const { Pool } = pkg;
 
-// const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: {
-//       rejectUnauthorized: false, // Required for cloud-hosted databases
-//     },
-//   });`
-
-const pool=new Pool({
-    user:"postgres",
-    host:"localhost",
-    database:"Blogs",
-    password:"Khyathi@1736",
-    port:5432,
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false, // Required for cloud-hosted databases
+    },
 });
-pool.connect();
+
+// const pool=new Pool({
+//     user:"postgres",
+//     host:"localhost",
+//     database:"Blogs",
+//     password:"Khyathi@1736",
+//     port:5432,
+// });
+// pool.connect();
 
 
 async function fetchEmails() {
@@ -33,8 +33,8 @@ async function fetchEmails() {
 
 async function insertNewUser(fn, ln, em, ps) {
     await pool.query(
-        `insert into users(fname,lname,email,password) 
-         values($1,$2,$3,$4)`,
+        `insert into users(fname, lname, email, password)
+values($1, $2, $3, $4)`,
         [fn, ln, em, ps]
     );
 };
@@ -70,21 +70,21 @@ async function findFnameIdbyEmail(email) {
 async function allPosts() {
     try {
         const result = await pool.query(`
-            SELECT 
-                p.post_id,
-                p.user_id,
-                p.user_name,
-                p.post_category,
-                p.post_title,
-                p.post_content,
-                p.post_date,
-                COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
-                COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
+SELECT
+p.post_id,
+    p.user_id,
+    p.user_name,
+    p.post_category,
+    p.post_title,
+    p.post_content,
+    p.post_date,
+    COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
+        COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
             FROM posts p
             LEFT JOIN post_reactions pr ON p.post_id = pr.post_id
             GROUP BY p.post_id, p.user_id, p.user_name, p.post_category, p.post_title, p.post_content, p.post_date
             ORDER BY p.post_date DESC
-        `);
+    `);
 
         return result.rows;
     } catch (err) {
@@ -97,22 +97,22 @@ async function findMyPosts(id) {
     try {
         if (id) {
             const result = await pool.query(`
-                SELECT 
-                    p.post_id,
-                    p.user_id,
-                    p.user_name,
-                    p.post_category,
-                    p.post_title,
-                    p.post_content,
-                    p.post_date,
-                    COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
-                    COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
+SELECT
+p.post_id,
+    p.user_id,
+    p.user_name,
+    p.post_category,
+    p.post_title,
+    p.post_content,
+    p.post_date,
+    COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
+        COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
                 FROM posts p
                 LEFT JOIN post_reactions pr ON p.post_id = pr.post_id
-                where p.user_id=$1
+                where p.user_id = $1
                 GROUP BY p.post_id, p.user_id, p.user_name, p.post_category, p.post_title, p.post_content, p.post_date
-                ORDER BY p.post_date DESC 
-            `, [id]);
+                ORDER BY p.post_date DESC
+    `, [id]);
             // console.log(result.rows);
             return result.rows;
         } else {
@@ -132,23 +132,23 @@ async function trendingPosts() {
 
         while (trendingPosts.length < 10) {
             const result = await pool.query(`
-                SELECT 
-                    p.post_id,
-                    p.user_id,
-                    p.user_name,
-                    p.post_category,
-                    p.post_title,
-                    p.post_content,
-                    p.post_date,
-                    COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
-                    COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
+SELECT
+p.post_id,
+    p.user_id,
+    p.user_name,
+    p.post_category,
+    p.post_title,
+    p.post_content,
+    p.post_date,
+    COALESCE(SUM(CASE WHEN pr.reaction_type = 'like' THEN 1 ELSE 0 END), 0) AS post_likes,
+        COALESCE(SUM(CASE WHEN pr.reaction_type = 'dislike' THEN 1 ELSE 0 END), 0) AS post_dislikes
                 FROM posts p
                 LEFT JOIN post_reactions pr ON p.post_id = pr.post_id
                 WHERE p.post_date >= NOW() - INTERVAL '${daysInterval} days'
                 GROUP BY p.post_id, p.user_id, p.user_name, p.post_category, p.post_title, p.post_content, p.post_date
                 ORDER BY post_likes DESC, p.post_date DESC
                 LIMIT 10;
-            `);
+`);
 
             trendingPosts = result.rows;
             if (trendingPosts.length >= 10) break; // Stop if we have 10 posts
